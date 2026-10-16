@@ -1,0 +1,49 @@
+name: Sync products from Google Sheet
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-products
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download CSV from Google Sheet
+        env:
+          SHEET_ID: "1xby10YuaEb2e33UalrVEG5gW19flRmybp9Ow-R_p27Y"
+        run: |
+          curl -fsSL --retry 3 --max-time 30 \
+            "https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv" \
+            -o products.new.csv
+
+          if ! head -n 1 products.new.csv | tr 'A-Z' 'a-z' | grep -q "name"; then
+            echo "Downloaded file is not a valid products CSV. Keeping old products.csv"
+            exit 1
+          fi
+          if [ "$(wc -l < products.new.csv)" -lt 2 ]; then
+            echo "CSV has no product rows. Keeping old products.csv"
+            exit 1
+          fi
+          mv products.new.csv products.csv
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- products.csv; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add products.csv
+          git commit -m "Update products from Google Sheet"
+          git push
