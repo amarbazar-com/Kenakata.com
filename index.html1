@@ -6,9 +6,11 @@
   <title>আমার বাজার - অনলাইন শপিং</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    /* (Your existing CSS — unchanged) */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;}
-    :root { --primary-color:#25d366; --secondary-color:#075e54; --dark-color:#333; --accent-color:#e74c3c; --bg:#f8f9fa; --white:#fff; --shadow:rgba(0,0,0,0.08); }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+    :root {
+      --primary-color: #25d366; --secondary-color: #075e54; --dark-color: #333;
+      --accent-color: #e74c3c; --bg: #f8f9fa; --white: #fff; --shadow: rgba(0, 0, 0, 0.08);
+    }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--dark-color); padding-bottom: 70px; }
     header { background: var(--white); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 12px var(--shadow); }
@@ -16,7 +18,11 @@
     .logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 700; color: var(--secondary-color); }
     .nav-link-btn { text-decoration: none; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 8px 16px; border-radius: 25px; font-weight: 600; transition: 0.3s ease; }
     .nav-link-btn:hover { background: var(--secondary-color); color: var(--white); }
-    .hero-banner { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200") center/cover no-repeat; color: #fff; text-align: center; padding: 80px 20px; }
+    .hero-banner {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url("https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200") center/cover no-repeat;
+      color: #fff; text-align: center; padding: 80px 20px;
+    }
     .hero-banner h1 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 10px; }
     .hero-banner p { font-size: 18px; opacity: 0.95; }
     .category-container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
@@ -31,43 +37,43 @@
     .product-title { font-size: 17px; font-weight: 700; color: #2c3e50; margin-bottom: 10px; min-height: 44px; }
     .price-box { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
     .product-price { font-size: 19px; font-weight: 800; color: var(--accent-color); }
-    .old-price { font-size: 14px; color:#888; text-decoration: line-through; }
-    .order-btn { width: 100%; border: none; background: var(--primary-color); color: var(--white); padding: 12px 14px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:0.3s ease; }
-    .order-btn:hover { background:#1ea952; }
-    .about-section { max-width:1200px; margin:40px auto 0; background:var(--white); border-radius:12px; padding:30px 20px; box-shadow:0 6px 18px var(--shadow); }
-    .about-section h2 { color:var(--secondary-color); display:inline-block; border-bottom:2px solid var(--secondary-color); padding-bottom:5px; margin-bottom:18px; font-size:24px; }
-    .about-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; }
-    .about-box { background:#f9f9f9; border-left:4px solid var(--secondary-color); border-radius:8px; padding:18px; }
-    .about-box h3 { font-size:18px; margin-bottom:10px; color:#333; }
-    .about-box p { line-height:1.7; color:#666; font-size:14px; }
-    .modal { position:fixed; inset:0; background: rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index:2000; }
-    .modal-content { position:relative; width:90%; max-width:500px; background:var(--white); border-radius:12px; padding:24px; max-height:90vh; overflow-y:auto; }
-    .close-modal { position:absolute; right:16px; top:10px; font-size:28px; cursor:pointer; color:#444; }
-    .modal-product-preview { background:#f9f9f9; border-radius:8px; padding:16px; margin-bottom:20px; text-align:center; border:1px solid #e0e0e0; }
-    .modal-product-preview img { max-width:100%; height:auto; border-radius:6px; max-height:220px; object-fit:cover; }
-    .modal-product-name { font-size:16px; font-weight:700; color:#2c3e50; margin-bottom:6px; }
-    .modal-product-price { font-size:18px; font-weight:800; color:var(--accent-color); }
-    .form-group { margin-bottom:14px; }
-    .form-group label { display:block; margin-bottom:6px; font-weight:600; font-size:14px; }
-    .form-group input, .form-group textarea { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; }
-    .floating-chat { position:fixed; right:20px; bottom:20px; background:var(--primary-color); color:var(--white); text-decoration:none; padding:12px 18px; border-radius:30px; font-weight:700; box-shadow:0 8px 18px rgba(37,211,102,0.35); display:flex; align-items:center; gap:10px; z-index:1500; transition:0.3s ease; }
-    .floating-chat:hover { background:#1ea952; }
-    .loading { text-align:center; padding:40px 10px; color:#666; font-size:18px; grid-column:1 / -1; }
-    @media (max-width:600px) { .header-container { flex-direction:column; gap:12px; } .modal-content { width:95%; padding:18px; } }
+    .old-price { font-size: 14px; color: #888; text-decoration: line-through; }
+    .order-btn { width: 100%; border: none; background: var(--primary-color); color: var(--white); padding: 12px 14px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s ease; }
+    .order-btn:hover { background: #1ea952; }
+    .about-section { max-width: 1200px; margin: 40px auto 0; background: var(--white); border-radius: 12px; padding: 30px 20px; box-shadow: 0 6px 18px var(--shadow); }
+    .about-section h2 { color: var(--secondary-color); display: inline-block; border-bottom: 2px solid var(--secondary-color); padding-bottom: 5px; margin-bottom: 18px; font-size: 24px; }
+    .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .about-box { background: #f9f9f9; border-left: 4px solid var(--secondary-color); border-radius: 8px; padding: 18px; }
+    .about-box h3 { font-size: 18px; margin-bottom: 10px; color: #333; }
+    .about-box p { line-height: 1.7; color: #666; font-size: 14px; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
+    .modal-content { position: relative; width: 90%; max-width: 500px; background: var(--white); border-radius: 12px; padding: 24px; max-height: 90vh; overflow-y: auto; }
+    .close-modal { position: absolute; right: 16px; top: 10px; font-size: 28px; cursor: pointer; color: #444; }
+    .modal-content h3 { margin-bottom: 16px; color: var(--secondary-color); font-size: 24px; }
+    .modal-product-preview { background: #f9f9f9; border-radius: 8px; padding: 16px; margin-bottom: 20px; text-align: center; border: 1px solid #e0e0e0; }
+    .modal-product-preview img { max-width: 100%; height: auto; border-radius: 6px; max-height: 220px; object-fit: cover; }
+    .modal-product-info { margin-top: 12px; }
+    .modal-product-name { font-size: 16px; font-weight: 700; color: #2c3e50; margin-bottom: 6px; }
+    .modal-product-price { font-size: 18px; font-weight: 800; color: var(--accent-color); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+    .floating-chat { position: fixed; right: 20px; bottom: 20px; background: var(--primary-color); color: var(--white); text-decoration: none; padding: 12px 18px; border-radius: 30px; font-weight: 700; box-shadow: 0 8px 18px rgba(37, 211, 102, 0.35); display: flex; align-items: center; gap: 10px; z-index: 1500; transition: 0.3s ease; }
+    .floating-chat:hover { background: #1ea952; }
+    .loading { text-align: center; padding: 40px 10px; color: #666; font-size: 18px; grid-column: 1 / -1; }
+    @media (max-width: 600px) {
+      .header-container { flex-direction: column; gap: 12px; }
+      .modal-content { width: 95%; padding: 18px; }
+    }
   </style>
 </head>
 <body>
 
   <header>
     <div class="header-container">
-      <div class="logo">
-        <i class="fa-solid fa-bag-shopping"></i>
-        আমার বাজার
-      </div>
+      <div class="logo"><i class="fa-solid fa-bag-shopping"></i> আমার বাজার</div>
       <div class="nav-links">
-        <a href="#aboutSection" class="nav-link-btn">
-          <i class="fa-solid fa-circle-info"></i> About Us
-        </a>
+        <a href="#aboutSection" class="nav-link-btn"><i class="fa-solid fa-circle-info"></i> About Us</a>
       </div>
     </div>
   </header>
@@ -78,11 +84,11 @@
   </div>
 
   <div class="category-container">
-    <div class="category-tabs">
-      <button class="tab-btn active" onclick="filterCategory('all', this)">সব প্রোডাক্ট</button>
-      <button class="tab-btn" onclick="filterCategory('men', this)">Men (ছেলেদের)</button>
-      <button class="tab-btn" onclick="filterCategory('women', this)">Women (মেয়েদের)</button>
-      <button class="tab-btn" onclick="filterCategory('kids', this)">Kids (শিশুদের)</button>
+    <div class="category-tabs" id="categoryTabs">
+      <button class="tab-btn active" data-cat="all">সব প্রোডাক্ট</button>
+      <button class="tab-btn" data-cat="men">Men (ছেলেদের)</button>
+      <button class="tab-btn" data-cat="women">Women (মেয়েদের)</button>
+      <button class="tab-btn" data-cat="kids">Kids (শিশুদের)</button>
     </div>
 
     <div class="product-grid" id="productGrid">
@@ -110,7 +116,7 @@
 
   <div class="modal" id="orderModal">
     <div class="modal-content">
-      <span class="close-modal" onclick="closeOrderModal()">&times;</span>
+      <span class="close-modal" id="closeModalBtn">&times;</span>
       <h3>অর্ডার ফরম</h3>
 
       <div class="modal-product-preview">
@@ -121,32 +127,23 @@
         </div>
       </div>
 
-      <form onsubmit="sendWhatsAppOrder(event)">
-        <input type="hidden" id="modalProdTitle" />
-        <input type="hidden" id="modalProdPrice" />
-        <input type="hidden" id="modalProdOldPrice" />
-        <input type="hidden" id="modalProdImg" />
-
+      <form id="orderForm">
         <div class="form-group">
           <label>আপনার নাম:</label>
           <input type="text" id="custName" required placeholder="আপনার নাম" />
         </div>
-
         <div class="form-group">
           <label>মোবাইল নম্বর:</label>
           <input type="tel" id="custPhone" required placeholder="017XXXXXXXX" />
         </div>
-
         <div class="form-group">
           <label>সম্পূর্ণ ঠিকানা / লোকেশন:</label>
           <textarea id="custAddress" rows="2" required placeholder="বাসা নং, গ্রাম/রোড, থানা, জেলা"></textarea>
         </div>
-
         <div class="form-group">
           <label>ফেসবুক আইডি লিঙ্ক (Optional):</label>
           <input type="url" id="custFB" placeholder="https://facebook.com/yourid" />
         </div>
-
         <button type="submit" class="order-btn">
           <i class="fa-brands fa-whatsapp"></i> WhatsApp-এ অর্ডার করুন
         </button>
@@ -154,346 +151,285 @@
     </div>
   </div>
 
-  <a href="https://wa.me/8801891962606" target="_blank" class="floating-chat">
+  <a href="https://wa.me/8801891962606" target="_blank" rel="noopener" class="floating-chat">
     <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i>
     সরাসরি মেসেজ করুন
   </a>
 
-  <!--
-    IMPORTANT: Below are auxiliary files you should create in your repository.
-    1) Create a file at .github/workflows/update-products.yml with the YAML content pasted below.
-    2) Create scripts/update-products.js with the JS content below.
-    3) Create package.json with the content below.
-    4) Create products.json (initially set to an empty array [] ) in repo root.
-    5) Add a repository secret named SHEET_ID with your Google Sheet ID.
-  -->
-
-  <!-- ===== FILE: .github/workflows/update-products.yml =====
-name: Update products.json from Google Sheet
-
-on:
-  schedule:
-    - cron: '*/5 * * * *' # run every 5 minutes
-  workflow_dispatch: {}
-
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: npm ci
-      - name: Run update script
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          FILE_PATH: products.json
-        run: node scripts/update-products.js
-  ============================================================ -->
-
-  <!-- ===== FILE: scripts/update-products.js =====
-const fs = require('fs');
-const Papa = require('papaparse');
-const fetch = globalThis.fetch || require('node-fetch');
-
-const SHEET_ID = process.env.SHEET_ID;
-const FILE_PATH = process.env.FILE_PATH || 'products.json';
-
-if (!SHEET_ID) {
-  console.error('SHEET_ID env var is required');
-  process.exit(1);
-}
-
-async function fetchCsv(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch sheet: ' + res.status);
-  return await res.text();
-}
-
-function parseCsv(csv) {
-  const result = Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim().toLowerCase() });
-  if (result.errors && result.errors.length) {
-    console.warn('CSV parse warnings/errors:', result.errors);
-  }
-  return result.data.map((row, idx) => ({
-    id: idx + 1,
-    name: String(row.name || '').trim(),
-    category: String(row.category || 'all').toLowerCase().trim(),
-    price: Number(row.price || 0) || 0,
-    discount_price: row.discount_price ? Number(row.discount_price) : '',
-    img: String(row.img || '').trim() || 'https://placehold.co/600x400/f0f0f0/333?text=No+Image'
-  })).filter(p => p.name);
-}
-
-(async () => {
-  try {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-    console.log('Fetching CSV from', url);
-    const csv = await fetchCsv(url);
-    const products = parseCsv(csv);
-    const json = JSON.stringify(products, null, 2);
-
-    let write = true;
-    if (fs.existsSync(FILE_PATH)) {
-      const existing = fs.readFileSync(FILE_PATH, 'utf8');
-      if (existing.trim() === json.trim()) {
-        write = false;
-        console.log('No changes to products.json');
-      }
-    }
-
-    if (write) {
-      fs.writeFileSync(FILE_PATH, json, 'utf8');
-      console.log('Wrote', FILE_PATH);
-
-      // Commit & push
-      try {
-        execSync('git config user.name \"github-actions[bot]\"');
-        execSync('git config user.email \"41898282+github-actions[bot]@users.noreply.github.com\"');
-        execSync(`git add ${FILE_PATH}`);
-        execSync(`git commit -m \"Update products.json from Google Sheet\" || true`);
-        execSync('git push');
-        console.log('Committed and pushed changes');
-      } catch (err) {
-        console.warn('Git commit/push may be skipped (action already has permission to push when using actions/checkout with token).', err.message);
-      }
-    }
-  } catch (err) {
-    console.error('Error:', err);
-    process.exit(1);
-  }
-})();
-  ===== END UPDATE SCRIPT ===== -->
-
-  <!-- ===== FILE: package.json =====
-{
-  "name": "amar-bazar-products",
-  "private": true,
-  "dependencies": {
-    "papaparse": "^5.3.2",
-    "node-fetch": "^2.6.7"
-  }
-}
-  ===== END package.json ===== -->
-
-  <!-- ===== FILE: products.json (initial sample) =====
-[
-  {
-    "id": 1,
-    "name": "Sample Product A",
-    "category": "men",
-    "price": 450,
-    "discount_price": 400,
-    "img": "https://placehold.co/600x400/f0f0f0/333?text=Sample+A"
-  }
-]
-  ===== END sample products.json ===== -->
-
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
   <script>
-    // Main client JS: fetch GitHub-hosted JSON first, fallback to Google Sheet CSV.
     const ADMIN_WHATSAPP = "8801891962606";
-    const SHEET_ID = "1xby10YuaEb2e33UalrVEG5gW19flRmybp9Ow-R_p27Y"; // replace if different
-    const CACHE_EXPIRY_MINUTES = 30;
-    const GITHUB_JSON_URL = "https://raw.githubusercontent.com/shshr4113-art/Amar-Bazar/main/products.json";
+
+    // কত মিনিট পর ব্রাউজার নতুন ডেটা আনবে
+    const REFRESH_MINUTES = 5;
+    const FETCH_TIMEOUT_MS = 8000;
+    const CACHE_KEY = "products_cache_v2";
+    const PLACEHOLDER = "https://placehold.co/600x400/f0f0f0/333?text=No+Image";
+
+    // ভিজিটরের ব্রাউজার শুধু নিজের সাইটের products.csv পড়ে।
+    // Google Sheet-এ ভিজিটর কখনো রিকোয়েস্ট পাঠায় না।
+    function getSources() {
+      const bucket = Math.floor(Date.now() / (REFRESH_MINUTES * 60 * 1000));
+      return [`products.csv?v=${bucket}`];
+    }
 
     let allProducts = [];
+    let currentCategory = "all";
 
-    function getSheetUrl() {
-      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+    /* ---------- helpers ---------- */
+    function escapeHTML(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     }
 
-    async function fetchWithRetries(url, retries = 3, baseDelay = 800) {
-      let attempt = 0;
-      while (attempt <= retries) {
-        try {
-          const resp = await fetch(url, { cache: "no-store" });
-          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-          return await resp.text();
-        } catch (err) {
-          if (attempt === retries) throw err;
-          const delay = baseDelay * Math.pow(2, attempt);
-          await new Promise(r => setTimeout(r, delay));
+    function toNumber(v) {
+      if (v === undefined || v === null || v === "") return 0;
+      const bn = "০১২৩৪৫৬৭৮৯";
+      const s = String(v).replace(/[০-৯]/g, d => bn.indexOf(d)).replace(/[^\d.]/g, "");
+      return Number(s) || 0;
+    }
+
+    function fixImageUrl(url) {
+      if (!url) return PLACEHOLDER;
+      url = url.trim();
+      // Google Drive শেয়ার লিংক -> সরাসরি ছবি
+      const m = url.match(/drive\.google\.com\/file\/d\/([^/]+)/) || url.match(/drive\.google\.com\/(?:open|uc)\?(?:.*&)?id=([^&]+)/);
+      if (m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w800`;
+      if (!/^https?:\/\//i.test(url)) return PLACEHOLDER;
+      return url;
+    }
+
+    /* ---------- সঠিক CSV parser (quote, comma, newline সব সামলায়) ---------- */
+    function parseCSVRows(text) {
+      text = text.replace(/^\uFEFF/, "");
+      const rows = [];
+      let row = [], field = "", inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (inQuotes) {
+          if (ch === '"') {
+            if (text[i + 1] === '"') { field += '"'; i++; }
+            else inQuotes = false;
+          } else field += ch;
+        } else {
+          if (ch === '"') inQuotes = true;
+          else if (ch === ",") { row.push(field); field = ""; }
+          else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+          else if (ch === "\r") { /* skip */ }
+          else field += ch;
         }
-        attempt++;
+      }
+      if (field !== "" || row.length) { row.push(field); rows.push(row); }
+      return rows;
+    }
+
+    function parseProducts(csv) {
+      const rows = parseCSVRows(csv);
+      if (rows.length < 2) return null;
+      const headers = rows[0].map(h => h.trim().toLowerCase());
+      if (!headers.includes("name")) return null;
+
+      const products = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r.some(v => v.trim() !== "")) continue;
+        const o = {};
+        headers.forEach((h, idx) => { o[h] = (r[idx] || "").trim(); });
+        if (!o.name) continue;
+        const price = toNumber(o.price);
+        const disc = toNumber(o.discount_price);
+        products.push({
+          name: o.name,
+          category: (o.category || "all").toLowerCase().trim(),
+          price: price,
+          discount_price: disc > 0 ? disc : 0,
+          img: fixImageUrl(o.img)
+        });
+      }
+      return products;
+    }
+
+    /* ---------- fetch ---------- */
+    async function fetchWithTimeout(url) {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+      try {
+        const res = await fetch(url, { signal: ctrl.signal });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.text();
+      } finally {
+        clearTimeout(t);
       }
     }
 
-    function parseCSVWithPapa(csv) {
-      const result = Papa.parse(csv, { header: true, skipEmptyLines: true, transformHeader: h => h.trim().toLowerCase() });
-      if (result.errors && result.errors.length) console.warn("CSV parse warnings/errors:", result.errors);
-      const rows = result.data;
-      return rows.map((row, idx) => ({
-        id: idx + 1,
-        name: (row.name || "").trim(),
-        category: (row.category || "all").toLowerCase().trim(),
-        price: Number(row.price || 0) || 0,
-        discount_price: row.discount_price ? Number(row.discount_price) : "",
-        img: row.img && row.img.trim() ? row.img.trim() : "https://placehold.co/600x400/f0f0f0/333?text=No+Image"
-      })).filter(p => p.name);
+    let lastError = "";
+
+    async function loadFresh() {
+      for (const url of getSources()) {
+        try {
+          const text = await fetchWithTimeout(url);
+          const products = parseProducts(text);
+          if (products && products.length) return products;
+          lastError = "products.csv পাওয়া গেছে কিন্তু ভেতরে কোনো প্রোডাক্ট নেই (হেডারে name, category, price, discount_price, img আছে কিনা দেখুন)";
+        } catch (e) {
+          lastError = location.protocol === "file:"
+            ? "ফাইলটি কম্পিউটার থেকে সরাসরি খোলা হয়েছে। অনলাইন সাইট (GitHub Pages) থেকে খুলুন"
+            : "products.csv লোড হয়নি (" + e.message + ")। GitHub repo-তে products.csv আছে কিনা দেখুন";
+          console.warn("Source failed:", url, e.message);
+        }
+      }
+      return null;
     }
 
+    /* ---------- render ---------- */
     function displayProducts(items) {
       const grid = document.getElementById("productGrid");
-      grid.innerHTML = "";
       if (!items || items.length === 0) {
-        const p = document.createElement("p");
-        p.className = "loading";
-        p.textContent = "কোনো প্রোডাক্ট পাওয়া যায়নি!";
-        grid.appendChild(p);
+        grid.innerHTML = '<p class="loading">কোনো প্রোডাক্ট পাওয়া যায়নি!</p>';
         return;
       }
-      items.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        const img = document.createElement("img");
-        img.className = "product-image";
-        img.src = p.img;
-        img.alt = p.name;
-        img.onerror = () => { img.src = 'https://placehold.co/600x400/f0f0f0/333?text=No+Image'; };
-        const info = document.createElement("div");
-        info.className = "product-info";
-        const title = document.createElement("div");
-        title.className = "product-title";
-        title.textContent = p.name;
-        const priceBox = document.createElement("div");
-        priceBox.className = "price-box";
-        const priceSpan = document.createElement("span");
-        priceSpan.className = "product-price";
-        const displayPrice = (p.discount_price && p.discount_price !== "") ? p.discount_price : p.price;
-        priceSpan.textContent = `৳ ${displayPrice}`;
-        priceBox.appendChild(priceSpan);
-        if (p.discount_price && Number(p.discount_price) !== Number(p.price)) {
-          const old = document.createElement("span");
-          old.className = "old-price";
-          old.textContent = `৳ ${p.price}`;
-          priceBox.appendChild(old);
-        }
-        const btn = document.createElement("button");
-        btn.className = "order-btn";
-        btn.type = "button";
-        btn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Order Now`;
-        btn.addEventListener("click", () => openOrderModal(p.name, String(displayPrice), p.price && Number(p.price) !== Number(displayPrice) ? String(p.price) : "", p.img));
-        info.appendChild(title);
-        info.appendChild(priceBox);
-        info.appendChild(btn);
-        card.appendChild(img);
-        card.appendChild(info);
-        grid.appendChild(card);
+
+      grid.innerHTML = items.map(p => {
+        const hasDisc = p.discount_price > 0 && p.discount_price !== p.price;
+        const price = hasDisc ? p.discount_price : p.price;
+        const idx = allProducts.indexOf(p);
+        return `
+          <div class="product-card">
+            <img src="${escapeHTML(p.img)}" class="product-image" alt="${escapeHTML(p.name)}" loading="lazy" referrerpolicy="no-referrer" data-fallback="1">
+            <div class="product-info">
+              <div class="product-title">${escapeHTML(p.name)}</div>
+              <div class="price-box">
+                <span class="product-price">৳ ${price}</span>
+                ${hasDisc ? `<span class="old-price">৳ ${p.price}</span>` : ""}
+              </div>
+              <button class="order-btn" data-index="${idx}">
+                <i class="fa-brands fa-whatsapp"></i> Order Now
+              </button>
+            </div>
+          </div>`;
+      }).join("");
+
+      // ছবি লোড না হলে placeholder
+      grid.querySelectorAll("img[data-fallback]").forEach(img => {
+        img.addEventListener("error", () => { img.src = PLACEHOLDER; }, { once: true });
       });
     }
 
-    async function fetchProducts() {
-      const now = Date.now();
-      const cachedData = localStorage.getItem("cached_products_json");
-      const cacheTime = localStorage.getItem("products_cache_time");
-      if (cachedData && cacheTime && (now - Number(cacheTime) < CACHE_EXPIRY_MINUTES * 60 * 1000)) {
-        try {
-          allProducts = JSON.parse(cachedData);
-          displayProducts(allProducts);
-          backgroundUpdate();
-          return;
-        } catch (e) {
-          console.warn("Cached data invalid");
-        }
-      }
-      if (cachedData) {
-        try { allProducts = JSON.parse(cachedData); displayProducts(allProducts); } catch (_) {}
-      } else {
-        document.getElementById("productGrid").innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> প্রোডাক্ট লোড হচ্ছে...</div>';
-      }
+    function renderCurrent() {
+      const list = currentCategory === "all" ? allProducts : allProducts.filter(p => p.category === currentCategory);
+      displayProducts(list);
+    }
+
+    /* ---------- init: cache আগে দেখাও, পিছনে fresh ডেটা আনো ---------- */
+    async function init() {
+      let cached = null;
       try {
-        await networkFetchAndUpdate();
-      } catch (err) {
-        console.error("Initial network fetch failed:", err);
-        if (!cachedData) {
-          document.getElementById("productGrid").innerHTML =
-            '<p class="loading">প্রোডাক্ট লোড করতে সমস্যা হয়েছে। Google Sheet "Anyone with the link" হিসেবে share করা আছে কিনা চেক করুন। <br><button id="retryFetch" class="tab-btn" style="margin-top:12px;">আবার চেষ্টা করুন</button></p>';
-          document.getElementById("retryFetch").addEventListener("click", () => fetchProducts());
-        }
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) cached = JSON.parse(raw);
+      } catch (_) {}
+
+      if (cached && cached.products && cached.products.length) {
+        allProducts = cached.products;
+        renderCurrent();
+      }
+
+      const fresh = await loadFresh();
+      if (fresh) {
+        const changed = JSON.stringify(fresh) !== JSON.stringify(allProducts);
+        allProducts = fresh;
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), products: fresh })); } catch (_) {}
+        if (changed) renderCurrent();
+      } else if (!allProducts.length) {
+        document.getElementById("productGrid").innerHTML =
+          '<p class="loading">প্রোডাক্ট লোড করতে সমস্যা হয়েছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।<br><small style="font-size:12px;color:#999">' + escapeHTML(lastError) + '</small></p>';
       }
     }
 
-    async function backgroundUpdate() {
-      try { await networkFetchAndUpdate(); } catch (err) { console.warn("Background update failed:", err); }
-    }
-
-    async function networkFetchAndUpdate() {
-      // 1) Try GitHub-hosted JSON first (fast, CDN)
-      try {
-        const resp = await fetch(GITHUB_JSON_URL, { cache: "no-store" });
-        if (resp.ok) {
-          const data = await resp.json();
-          allProducts = data;
-          localStorage.setItem("cached_products_json", JSON.stringify(allProducts));
-          localStorage.setItem("products_cache_time", String(Date.now()));
-          displayProducts(allProducts);
-          return;
-        }
-      } catch (e) {
-        console.warn("GitHub JSON fetch failed, fallback to sheet", e);
-      }
-
-      // 2) Fallback to Google Sheet CSV (only if GitHub JSON missing)
-      const csv = await fetchWithRetries(getSheetUrl(), 3);
-      const products = parseCSVWithPapa(csv);
-      allProducts = products;
-      localStorage.setItem("cached_products_json", JSON.stringify(allProducts));
-      localStorage.setItem("products_cache_time", String(Date.now()));
-      displayProducts(allProducts);
-    }
-
-    function filterCategory(cat, btn) {
+    /* ---------- category ---------- */
+    document.getElementById("categoryTabs").addEventListener("click", e => {
+      const btn = e.target.closest(".tab-btn");
+      if (!btn) return;
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-      if (cat === "all") { displayProducts(allProducts); return; }
-      const filtered = allProducts.filter(p => p.category && p.category.toLowerCase().trim() === cat);
-      displayProducts(filtered);
-    }
+      btn.classList.add("active");
+      currentCategory = btn.dataset.cat;
+      renderCurrent();
+    });
 
-    function openOrderModal(title, price, oldPrice, img) {
-      document.getElementById("modalProdTitle").value = title;
-      document.getElementById("modalProdPrice").value = price;
-      document.getElementById("modalProdOldPrice").value = oldPrice;
-      document.getElementById("modalProdImg").value = img;
-      document.getElementById("previewImg").src = img;
-      document.getElementById("previewName").textContent = title;
-      let priceText = `৳ ${price}`;
-      if (oldPrice) priceText += ` (আগের দাম: ৳ ${oldPrice})`;
-      document.getElementById("previewPrice").textContent = priceText;
+    /* ---------- order modal ---------- */
+    let selected = null;
+
+    document.getElementById("productGrid").addEventListener("click", e => {
+      const btn = e.target.closest(".order-btn");
+      if (!btn) return;
+      const p = allProducts[Number(btn.dataset.index)];
+      if (p) openOrderModal(p);
+    });
+
+    function openOrderModal(p) {
+      const hasDisc = p.discount_price > 0 && p.discount_price !== p.price;
+      selected = { name: p.name, price: hasDisc ? p.discount_price : p.price, oldPrice: hasDisc ? p.price : "", img: p.img };
+
+      const img = document.getElementById("previewImg");
+      img.src = p.img;
+      img.onerror = () => { img.src = PLACEHOLDER; };
+      document.getElementById("previewName").textContent = p.name;
+      let t = `৳ ${selected.price}`;
+      if (selected.oldPrice) t += ` (আগের দাম: ৳ ${selected.oldPrice})`;
+      document.getElementById("previewPrice").textContent = t;
+
       document.getElementById("orderModal").style.display = "flex";
     }
 
-    function closeOrderModal() { document.getElementById("orderModal").style.display = "none"; }
+    function closeOrderModal() {
+      document.getElementById("orderModal").style.display = "none";
+    }
 
-    function sendWhatsAppOrder(e) {
+    document.getElementById("closeModalBtn").addEventListener("click", closeOrderModal);
+    document.getElementById("orderModal").addEventListener("click", e => {
+      if (e.target.id === "orderModal") closeOrderModal();
+    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeOrderModal(); });
+
+    document.getElementById("orderForm").addEventListener("submit", e => {
       e.preventDefault();
-      const title = document.getElementById("modalProdTitle").value;
-      const price = document.getElementById("modalProdPrice").value;
-      const oldPrice = document.getElementById("modalProdOldPrice").value;
-      const img = document.getElementById("modalProdImg").value;
+      if (!selected) return;
+
       const name = document.getElementById("custName").value.trim();
       const phone = document.getElementById("custPhone").value.trim();
       const address = document.getElementById("custAddress").value.trim();
       const fb = document.getElementById("custFB").value.trim();
-      let priceDetails = `৳ ${price}`;
-      if (oldPrice) priceDetails += ` (আগের দাম: ৳ ${oldPrice})`;
-      let msg = `🛍️ *নতুন প্রোডাক্ট অর্ডার*\n\n📦 *প্রোডাক্টের তথ্য*\n━━━━━━━━━━━━━━━━\n*প্রোডাক্ট:* ${title}\n*মূল্য:* ${priceDetails}\n*ছবি লিঙ্ক:* ${img}\n\n👤 *কাস্টমারের তথ্য*\n━━━━━━━━━━━━━━━━\n*নাম:* ${name}\n*ফোন নম্বর:* ${phone}\n*ঠিকানা:* ${address}`;
+
+      const bn = "০১২৩৪৫৬৭৮৯";
+      const phoneEn = phone.replace(/[০-৯]/g, d => bn.indexOf(d)).replace(/[\s-]/g, "");
+      if (!/^(?:\+?88)?01[3-9]\d{8}$/.test(phoneEn)) {
+        alert("সঠিক মোবাইল নম্বর দিন (যেমন: 01712345678)");
+        return;
+      }
+
+      let priceDetails = `৳ ${selected.price}`;
+      if (selected.oldPrice) priceDetails += ` (আগের দাম: ৳ ${selected.oldPrice})`;
+
+      let msg = `🛍️ *নতুন প্রোডাক্ট অর্ডার*
+
+📦 *প্রোডাক্টের তথ্য*
+━━━━━━━━━━━━━━━━
+*প্রোডাক্ট:* ${selected.name}
+*মূল্য:* ${priceDetails}
+*ছবি লিঙ্ক:* ${selected.img}
+
+👤 *কাস্টমারের তথ্য*
+━━━━━━━━━━━━━━━━
+*নাম:* ${name}
+*ফোন নম্বর:* ${phoneEn}
+*ঠিকানা:* ${address}`;
+
       if (fb) msg += `\n*ফেসবুক:* ${fb}`;
       msg += `\n\n✅ অনুগ্রহ করে অর্ডারটি কনফার্ম করুন।`;
-      const whatsappUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
-      window.open(whatsappUrl, "_blank");
-      closeOrderModal();
-      const form = document.querySelector("#orderModal form");
-      if (form) form.reset();
-    }
 
-    // Start
-    fetchProducts();
+      window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+      closeOrderModal();
+      e.target.reset();
+    });
+
+    init();
   </script>
 </body>
 </html>
