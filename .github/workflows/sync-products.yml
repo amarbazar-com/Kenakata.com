@@ -27,23 +27,23 @@ jobs:
             -o products.new.csv
 
           if ! head -n 1 products.new.csv | tr 'A-Z' 'a-z' | grep -q "name"; then
-            echo "Downloaded file is not a valid products CSV. Keeping old products.csv"
+            echo "Downloaded file is not a valid products CSV."
             exit 1
           fi
           if [ "$(wc -l < products.new.csv)" -lt 2 ]; then
-            echo "CSV has no product rows. Keeping old products.csv"
+            echo "CSV has no product rows."
             exit 1
           fi
           mv products.new.csv products.csv
 
       - name: Commit if changed
         run: |
-          if git diff --quiet -- products.csv; then
+          git add products.csv
+          if git diff --cached --quiet; then
             echo "No changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add products.csv
           git commit -m "Update products from Google Sheet"
           git push
