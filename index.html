@@ -14,6 +14,15 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--dark-color); padding-bottom: 70px; }
     header { background: var(--white); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 12px var(--shadow); }
+
+    /* ---------- চলমান ঘোষণা (বাম থেকে ডানে) ---------- */
+    .notice-bar { background: var(--accent-color); color: #fff; overflow: hidden; white-space: nowrap; padding: 8px 0; font-weight: 700; font-size: 15px; }
+    .notice-bar[hidden] { display: none; }
+    .notice-track { display: inline-block; animation: slideRight 30s linear infinite; will-change: transform; }
+    .notice-track span { margin: 0 40px; }
+    .notice-bar:hover .notice-track { animation-play-state: paused; }
+    @keyframes slideRight { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
+
     .header-container { max-width: 1200px; margin: 0 auto; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
     .logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 700; color: var(--secondary-color); }
     .nav-link-btn { text-decoration: none; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 8px 16px; border-radius: 25px; font-weight: 600; transition: 0.3s ease; }
@@ -26,6 +35,16 @@
     .hero-banner h1 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 10px; }
     .hero-banner p { font-size: 18px; opacity: 0.95; }
     .category-container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
+
+    /* ---------- সার্চ ---------- */
+    .search-box { position: relative; max-width: 560px; margin: 0 auto 22px; }
+    .search-box i.fa-magnifying-glass { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #888; }
+    .search-box input { width: 100%; padding: 13px 44px 13px 44px; border: 2px solid var(--secondary-color); border-radius: 30px; font-size: 16px; outline: none; background: var(--white); }
+    .search-box input:focus { box-shadow: 0 0 0 3px rgba(7, 94, 84, 0.18); }
+    .clear-search { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: none; background: #eee; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; cursor: pointer; color: #444; }
+    .clear-search[hidden] { display: none; }
+    .result-info { text-align: center; color: #666; font-size: 14px; margin-bottom: 14px; min-height: 18px; }
+
     .category-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 25px; }
     .tab-btn { border: 2px solid var(--secondary-color); background: var(--white); color: var(--secondary-color); padding: 10px 20px; border-radius: 25px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.3s ease; }
     .tab-btn.active, .tab-btn:hover { background: var(--secondary-color); color: var(--white); }
@@ -40,6 +59,9 @@
     .old-price { font-size: 14px; color: #888; text-decoration: line-through; }
     .order-btn { width: 100%; border: none; background: var(--primary-color); color: var(--white); padding: 12px 14px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s ease; }
     .order-btn:hover { background: #1ea952; }
+    .load-more-wrap { text-align: center; margin: 28px 0 6px; }
+    .load-more-btn { border: 2px solid var(--secondary-color); background: var(--white); color: var(--secondary-color); padding: 12px 34px; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s ease; }
+    .load-more-btn:hover { background: var(--secondary-color); color: var(--white); }
     .about-section { max-width: 1200px; margin: 40px auto 0; background: var(--white); border-radius: 12px; padding: 30px 20px; box-shadow: 0 6px 18px var(--shadow); }
     .about-section h2 { color: var(--secondary-color); display: inline-block; border-bottom: 2px solid var(--secondary-color); padding-bottom: 5px; margin-bottom: 18px; font-size: 24px; }
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
@@ -57,7 +79,8 @@
     .modal-product-price { font-size: 18px; font-weight: 800; color: var(--accent-color); }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
-    .form-group input, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: #fff; }
+    .form-group small { display: block; margin-top: 4px; color: #888; font-size: 12px; }
     .floating-chat { position: fixed; right: 20px; bottom: 20px; background: var(--primary-color); color: var(--white); text-decoration: none; padding: 12px 18px; border-radius: 30px; font-weight: 700; box-shadow: 0 8px 18px rgba(37, 211, 102, 0.35); display: flex; align-items: center; gap: 10px; z-index: 1500; transition: 0.3s ease; }
     .floating-chat:hover { background: #1ea952; }
     .loading { text-align: center; padding: 40px 10px; color: #666; font-size: 18px; grid-column: 1 / -1; }
@@ -65,11 +88,35 @@
       .header-container { flex-direction: column; gap: 12px; }
       .modal-content { width: 95%; padding: 18px; }
     }
+
+    /* ---------- ব্র্যান্ড কার্ড ও নতুন ডিজাইন ---------- */
+    .section-title { font-size: 20px; font-weight: 800; color: var(--secondary-color); margin: 8px 0 14px; display: flex; align-items: center; gap: 8px; }
+    .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; margin-bottom: 26px; }
+    .brand-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 6px 18px var(--shadow); cursor: pointer; transition: transform .25s ease; border: none; text-align: left; padding: 0; width: 100%; }
+    .brand-card:hover { transform: translateY(-4px); }
+    .brand-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: #f1f1f1; }
+    .brand-card .bc-info { padding: 10px 12px 12px; }
+    .brand-card .bc-title { font-weight: 800; font-size: 15px; color: #2c3e50; line-height: 1.3; }
+    .brand-card .bc-meta { font-size: 12.5px; color: #777; margin-top: 4px; }
+    .brand-card .bc-price { font-size: 13px; color: var(--accent-color); font-weight: 700; margin-top: 2px; }
+    .brand-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .back-btn { border: 2px solid var(--secondary-color); background: var(--white); color: var(--secondary-color); padding: 8px 16px; border-radius: 22px; font-weight: 700; cursor: pointer; font-size: 14px; }
+    .back-btn:hover { background: var(--secondary-color); color: #fff; }
+    .brand-bar h2 { font-size: 22px; color: #2c3e50; }
+    .brand-bar small { color: #777; font-size: 14px; }
+    .product-card { position: relative; }
+    .badge { position: absolute; top: 10px; left: 10px; background: var(--accent-color); color: #fff; font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 14px; z-index: 2; }
+    .code-tag { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 12px; z-index: 2; letter-spacing: .3px; }
+    .product-title { min-height: 0; margin-bottom: 8px; }
+    .price-ask { font-size: 14px; color: #666; font-weight: 600; }
   </style>
 </head>
 <body>
 
   <header>
+    <div class="notice-bar" id="noticeBar" hidden>
+      <div class="notice-track" id="noticeTrack"></div>
+    </div>
     <div class="header-container">
       <div class="logo"><i class="fa-solid fa-bag-shopping"></i> আমার বাজার</div>
       <div class="nav-links">
@@ -84,15 +131,49 @@
   </div>
 
   <div class="category-container">
-    <div class="category-tabs" id="categoryTabs">
-      <button class="tab-btn active" data-cat="all">সব প্রোডাক্ট</button>
-      <button class="tab-btn" data-cat="men">Men (ছেলেদের)</button>
-      <button class="tab-btn" data-cat="women">Women (মেয়েদের)</button>
-      <button class="tab-btn" data-cat="kids">Kids (শিশুদের)</button>
+
+    <div id="homeArea">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="searchInput" placeholder="ব্র্যান্ড বা কোড খুঁজুন... (যেমন: কটন, RC-25)" autocomplete="off" />
+        <button type="button" class="clear-search" id="clearSearch" hidden aria-label="মুছুন">&times;</button>
+      </div>
+
+      <div class="category-tabs" id="categoryTabs">
+        <button class="tab-btn active" data-cat="all">সব</button>
+        <button class="tab-btn" data-cat="men">Men (ছেলেদের)</button>
+        <button class="tab-btn" data-cat="women">Women (মেয়েদের)</button>
+        <button class="tab-btn" data-cat="kids">Kids (শিশুদের)</button>
+        <button class="tab-btn" data-cat="others">Others (অন্যান্য)</button>
+      </div>
+
+      <div class="result-info" id="resultInfo"></div>
+
+      <div id="codeSection" hidden>
+        <div class="section-title"><i class="fa-solid fa-tag"></i> কোড অনুযায়ী পণ্য</div>
+        <div class="product-grid" id="codeGrid"></div>
+      </div>
+
+      <div id="newSection" hidden>
+        <div class="section-title"><i class="fa-solid fa-bolt"></i> নতুন এসেছে</div>
+        <div class="product-grid" id="newGrid" style="margin-bottom:26px"></div>
+      </div>
+
+      <div class="section-title" id="brandTitle"><i class="fa-solid fa-layer-group"></i> কালেকশন</div>
+      <div class="brand-grid" id="brandGrid">
+        <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> লোড হচ্ছে...</div>
+      </div>
     </div>
 
-    <div class="product-grid" id="productGrid">
-      <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> প্রোডাক্ট লোড হচ্ছে...</div>
+    <div id="brandArea" hidden>
+      <div class="brand-bar">
+        <button type="button" class="back-btn" id="backBtn"><i class="fa-solid fa-arrow-left"></i> পেছনে</button>
+        <div><h2 id="brandName"></h2><small id="brandCount"></small></div>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="load-more-wrap" id="loadMoreWrap" hidden>
+        <button type="button" class="load-more-btn" id="loadMoreBtn">আরও দেখুন</button>
+      </div>
     </div>
   </div>
 
@@ -123,6 +204,7 @@
         <img id="previewImg" src="" alt="Product" />
         <div class="modal-product-info">
           <div class="modal-product-name" id="previewName"></div>
+          <div id="previewCode" style="font-size:12.5px;color:#777;margin-bottom:4px"></div>
           <div class="modal-product-price" id="previewPrice"></div>
         </div>
       </div>
@@ -137,8 +219,13 @@
           <input type="tel" id="custPhone" required placeholder="017XXXXXXXX" />
         </div>
         <div class="form-group">
-          <label>সম্পূর্ণ ঠিকানা / লোকেশন:</label>
-          <textarea id="custAddress" rows="2" required placeholder="বাসা নং, গ্রাম/রোড, থানা, জেলা"></textarea>
+          <label>এলাকা বেছে নিন: <span style="color:#e74c3c">*</span></label>
+          <select id="custArea" required></select>
+        </div>
+        <div class="form-group">
+          <label>বিস্তারিত ঠিকানা: <span style="color:#e74c3c">*</span></label>
+          <textarea id="custAddress" rows="2" required placeholder="যেমন: উত্তর পাড়া, তালুকদার বাড়ি, ২য় তলা"></textarea>
+          <small>পাড়া / মহল্লা / বাড়ির নাম বা কোনো পরিচিত চিহ্ন লিখুন</small>
         </div>
         <div class="form-group">
           <label>ফেসবুক আইডি লিঙ্ক (Optional):</label>
@@ -159,233 +246,328 @@
   <script>
     const ADMIN_WHATSAPP = "8801891962606";
 
-    // কত মিনিট পর ব্রাউজার নতুন ডেটা আনবে
-    const REFRESH_MINUTES = 5;
-    const FETCH_TIMEOUT_MS = 8000;
-    const CACHE_KEY = "products_cache_v2";
+    const CACHE_MINUTES = 5;            // নতুন তথ্য আনার ব্যবধান (ব্রাউজার ক্যাশ)
+    const FETCH_TIMEOUT_MS = 12000;
+    const PAGE_SIZE = 40;               // একবারে কতগুলো পণ্য দেখাবে
+    const PART_SIZE = 1000;             // build.py-র সাথে একই থাকতে হবে
     const PLACEHOLDER = "https://placehold.co/600x400/f0f0f0/333?text=No+Image";
+    const DEFAULT_AREAS = ["বাড্ডা"];
+    const CAT_LABEL = { men: "ছেলেদের", women: "মেয়েদের", kids: "শিশুদের", others: "অন্যান্য" };
 
-    // ভিজিটরের ব্রাউজার শুধু নিজের সাইটের products.csv পড়ে।
-    // Google Sheet-এ ভিজিটর কখনো রিকোয়েস্ট পাঠায় না।
-    function getSources() {
-      const bucket = Math.floor(Date.now() / (REFRESH_MINUTES * 60 * 1000));
-      return [`products.csv?v=${bucket}`];
-    }
+    function bucket() { return Math.floor(Date.now() / (CACHE_MINUTES * 60 * 1000)); }
 
-    let allProducts = [];
+    let brands = [], brandById = {}, newItems = [];
+    let areas = DEFAULT_AREAS.slice();
+    let notices = [];
     let currentCategory = "all";
+    let searchQuery = "";
+    let store = [];                     // কার্ডে দেখানো পণ্যগুলো (অর্ডার বাটনের জন্য)
+    let bv = null;                      // এখন খোলা ব্র্যান্ডের অবস্থা
+    let loadError = "";
 
     /* ---------- helpers ---------- */
     function escapeHTML(s) {
       return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     }
+    function bn(n) { try { return Number(n).toLocaleString("bn-BD"); } catch (_) { return String(n); } }
 
-    function toNumber(v) {
-      if (v === undefined || v === null || v === "") return 0;
-      const bn = "০১২৩৪৫৬৭৮৯";
-      const s = String(v).replace(/[০-৯]/g, d => bn.indexOf(d)).replace(/[^\d.]/g, "");
-      return Number(s) || 0;
+    function isFileId(r) { return /^[\w-]{20,}$/.test(r || ""); }
+    function imgUrl(ref, w) {
+      if (!ref) return PLACEHOLDER;
+      if (isFileId(ref)) return `https://lh3.googleusercontent.com/d/${ref}=w${w}`;
+      if (/^https?:\/\//i.test(ref)) return ref;
+      return PLACEHOLDER;
     }
 
-    function fixImageUrl(url) {
-      if (!url) return PLACEHOLDER;
-      url = url.trim();
-      // Google Drive শেয়ার লিংক -> সরাসরি ছবি
-      const m = url.match(/drive\.google\.com\/file\/d\/([^/]+)/) || url.match(/drive\.google\.com\/(?:open|uc)\?(?:.*&)?id=([^&]+)/);
-      if (m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w800`;
-      if (!/^https?:\/\//i.test(url)) return PLACEHOLDER;
-      return url;
-    }
-
-    /* ---------- সঠিক CSV parser (quote, comma, newline সব সামলায়) ---------- */
-    function parseCSVRows(text) {
-      text = text.replace(/^\uFEFF/, "");
-      const rows = [];
-      let row = [], field = "", inQuotes = false;
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        if (inQuotes) {
-          if (ch === '"') {
-            if (text[i + 1] === '"') { field += '"'; i++; }
-            else inQuotes = false;
-          } else field += ch;
-        } else {
-          if (ch === '"') inQuotes = true;
-          else if (ch === ",") { row.push(field); field = ""; }
-          else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
-          else if (ch === "\r") { /* skip */ }
-          else field += ch;
-        }
-      }
-      if (field !== "" || row.length) { row.push(field); rows.push(row); }
-      return rows;
-    }
-
-    function parseProducts(csv) {
-      const rows = parseCSVRows(csv);
-      if (rows.length < 2) return null;
-      const headers = rows[0].map(h => h.trim().toLowerCase());
-      if (!headers.includes("name")) return null;
-
-      const products = [];
-      for (let i = 1; i < rows.length; i++) {
-        const r = rows[i];
-        if (!r.some(v => v.trim() !== "")) continue;
-        const o = {};
-        headers.forEach((h, idx) => { o[h] = (r[idx] || "").trim(); });
-        if (!o.name) continue;
-        const price = toNumber(o.price);
-        const disc = toNumber(o.discount_price);
-        products.push({
-          name: o.name,
-          category: (o.category || "all").toLowerCase().trim(),
-          price: price,
-          discount_price: disc > 0 ? disc : 0,
-          img: fixImageUrl(o.img)
-        });
-      }
-      return products;
-    }
-
-    /* ---------- fetch ---------- */
-    async function fetchWithTimeout(url) {
+    async function getJSON(path) {
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
       try {
-        const res = await fetch(url, { signal: ctrl.signal });
+        const res = await fetch(`${path}?v=${bucket()}`, { signal: ctrl.signal });
         if (!res.ok) throw new Error("HTTP " + res.status);
-        return await res.text();
-      } finally {
-        clearTimeout(t);
+        return await res.json();
+      } finally { clearTimeout(t); }
+    }
+
+    /* ---------- ঘোষণা বার ---------- */
+    function renderNotices() {
+      const bar = document.getElementById("noticeBar");
+      const track = document.getElementById("noticeTrack");
+      if (!notices.length) { bar.hidden = true; return; }
+      track.innerHTML = notices.map(n => `<span>${escapeHTML(n)}</span>`).join("");
+      bar.hidden = false;
+      const dist = track.offsetWidth + window.innerWidth;
+      track.style.animationDuration = Math.max(12, Math.round(dist / 70)) + "s";
+    }
+    window.addEventListener("resize", () => { if (notices.length) renderNotices(); });
+
+    /* ---------- কার্ড ---------- */
+    function toItem(a, bid) {          // [code, img, name, price, disc]
+      const b = brandById[bid];
+      return { code: a[0], img: a[1], name: a[2] || (b ? b.t : ""), price: a[3] || 0, disc: a[4] || 0, bid: bid };
+    }
+
+    function cardHTML(it) {
+      const idx = store.push(it) - 1;
+      const hasDisc = it.disc > 0 && it.disc < it.price;
+      const now = hasDisc ? it.disc : it.price;
+      const pct = hasDisc ? Math.round((1 - it.disc / it.price) * 100) : 0;
+      return `
+        <div class="product-card">
+          ${pct > 0 ? `<span class="badge">${bn(pct)}% ছাড়</span>` : ""}
+          <span class="code-tag">${escapeHTML(it.code)}</span>
+          <img src="${escapeHTML(imgUrl(it.img, 500))}" class="product-image" alt="${escapeHTML(it.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-fallback="1">
+          <div class="product-info">
+            <div class="product-title">${escapeHTML(it.name)}</div>
+            <div class="price-box">
+              ${now > 0
+                ? `<span class="product-price">৳ ${now}</span>${hasDisc ? `<span class="old-price">৳ ${it.price}</span>` : ""}`
+                : `<span class="price-ask">দাম জানতে মেসেজ করুন</span>`}
+            </div>
+            <button class="order-btn" data-index="${idx}"><i class="fa-brands fa-whatsapp"></i> Order Now</button>
+          </div>
+        </div>`;
+    }
+
+    function brandCardHTML(b) {
+      return `
+        <button type="button" class="brand-card" data-id="${escapeHTML(b.id)}">
+          <img src="${escapeHTML(imgUrl(b.cover, 400))}" alt="${escapeHTML(b.t)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-fallback="1">
+          <div class="bc-info">
+            <div class="bc-title">${escapeHTML(b.t)}</div>
+            <div class="bc-meta">${escapeHTML(CAT_LABEL[b.c] || "")} · ${bn(b.n)} টি পণ্য</div>
+            ${b.min > 0 ? `<div class="bc-price">৳ ${b.min} থেকে</div>` : ""}
+          </div>
+        </button>`;
+    }
+
+    // ছবি লোড না হলে placeholder
+    document.addEventListener("error", e => {
+      const img = e.target;
+      if (img && img.tagName === "IMG" && img.dataset && img.dataset.fallback && img.src !== PLACEHOLDER) img.src = PLACEHOLDER;
+    }, true);
+
+    /* ---------- হোম ---------- */
+    function showHome() {
+      bv = null;
+      document.getElementById("brandArea").hidden = true;
+      document.getElementById("homeArea").hidden = false;
+      renderHome();
+    }
+
+    function renderHome() {
+      store = [];
+      const grid = document.getElementById("brandGrid");
+      const info = document.getElementById("resultInfo");
+      const newSec = document.getElementById("newSection");
+      const codeSec = document.getElementById("codeSection");
+      const title = document.getElementById("brandTitle");
+      codeSec.hidden = true;
+
+      if (loadError) {
+        newSec.hidden = true;
+        grid.innerHTML = '<p class="loading">লোড করতে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।<br><small style="font-size:12px;color:#999">' + escapeHTML(loadError) + '</small></p>';
+        return;
+      }
+
+      let list = brands;
+      if (searchQuery) {
+        const words = searchQuery.split(/\s+/).filter(Boolean);
+        list = brands.filter(b => {
+          const hay = (b.t + " " + b.b + " " + (b.x || "")).toLowerCase();
+          return words.every(w => hay.includes(w));
+        });
+        info.textContent = `"${searchQuery}" এর জন্য ${bn(list.length)} টি কালেকশন পাওয়া গেছে`;
+        title.hidden = false;
+      } else {
+        info.textContent = "";
+        if (currentCategory !== "all") list = brands.filter(b => b.c === currentCategory);
+        title.hidden = false;
+      }
+
+      // নতুন পণ্য (শুধু "সব" ট্যাবে, সার্চ ছাড়া)
+      if (!searchQuery && currentCategory === "all" && newItems.length) {
+        document.getElementById("newGrid").innerHTML = newItems.slice(0, 20).map(a => cardHTML(toItem(a.slice(0, 5), a[5]))).join("");
+        newSec.hidden = false;
+      } else newSec.hidden = true;
+
+      if (!list.length) {
+        grid.innerHTML = '<p class="loading">' + (searchQuery ? "দুঃখিত, এই নামে কিছু পাওয়া যায়নি।" : "এই ক্যাটাগরিতে এখনো কিছু নেই।") + '</p>';
+        return;
+      }
+      grid.innerHTML = list.slice(0, 300).map(brandCardHTML).join("");
+    }
+
+    document.getElementById("brandGrid").addEventListener("click", e => {
+      const c = e.target.closest(".brand-card");
+      if (c) location.hash = "#b/" + c.dataset.id;
+    });
+
+    /* ---------- ব্র্যান্ড পেজ ---------- */
+    async function openBrand(id) {
+      const b = brandById[id];
+      if (!b) { showHome(); return; }
+      bv = { b: b, list: [], next: b.parts - 1, shown: 0 };
+      document.getElementById("homeArea").hidden = true;
+      document.getElementById("brandArea").hidden = false;
+      document.getElementById("brandName").textContent = b.t;
+      document.getElementById("brandCount").textContent = `${CAT_LABEL[b.c] || ""} · ${bn(b.n)} টি পণ্য`;
+      document.getElementById("productGrid").innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> লোড হচ্ছে...</div>';
+      document.getElementById("loadMoreWrap").hidden = true;
+      window.scrollTo(0, 0);
+      const mine = bv;
+      try {
+        bv.shown = PAGE_SIZE;
+        await fillBrand();
+        if (bv !== mine) return;
+        store = [];
+        renderBrandGrid();
+      } catch (e) {
+        document.getElementById("productGrid").innerHTML = '<p class="loading">লোড করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।</p>';
       }
     }
 
-    let lastError = "";
+    // দরকার অনুযায়ী পরের অংশের ফাইল আনে (নতুন পণ্য আগে)
+    async function fillBrand() {
+      const mine = bv;
+      while (mine.list.length < mine.shown && mine.next >= 0) {
+        const part = await getJSON(`data/b/${mine.b.id}-${mine.next}.json`);
+        mine.next--;
+        for (let i = part.length - 1; i >= 0; i--) mine.list.push(toItem(part[i], mine.b.id));
+      }
+    }
 
-    async function loadFresh() {
-      for (const url of getSources()) {
-        try {
-          const text = await fetchWithTimeout(url);
-          const products = parseProducts(text);
-          if (products && products.length) return products;
-          lastError = "products.csv পাওয়া গেছে কিন্তু ভেতরে কোনো প্রোডাক্ট নেই (হেডারে name, category, price, discount_price, img আছে কিনা দেখুন)";
-        } catch (e) {
-          lastError = location.protocol === "file:"
-            ? "ফাইলটি কম্পিউটার থেকে সরাসরি খোলা হয়েছে। অনলাইন সাইট (GitHub Pages) থেকে খুলুন"
-            : "products.csv লোড হয়নি (" + e.message + ")। GitHub repo-তে products.csv আছে কিনা দেখুন";
-          console.warn("Source failed:", url, e.message);
-        }
+    function renderBrandGrid() {
+      const grid = document.getElementById("productGrid");
+      const show = bv.list.slice(0, bv.shown);
+      store = [];
+      grid.innerHTML = show.map(cardHTML).join("");
+      document.getElementById("loadMoreWrap").hidden = !(bv.list.length > bv.shown || bv.next >= 0);
+    }
+
+    document.getElementById("loadMoreBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("loadMoreBtn");
+      btn.disabled = true;
+      try {
+        bv.shown += PAGE_SIZE;
+        await fillBrand();
+        const y = window.scrollY;
+        renderBrandGrid();
+        window.scrollTo(0, y);
+      } catch (e) { alert("লোড করতে সমস্যা হয়েছে, আবার চেষ্টা করুন"); }
+      btn.disabled = false;
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      if (history.length > 1) history.back(); else location.hash = "";
+    });
+
+    /* ---------- রাউটিং ---------- */
+    function route() {
+      const m = location.hash.match(/^#b\/(\w+)$/);
+      if (m && brandById[m[1]]) openBrand(m[1]);
+      else showHome();
+    }
+    window.addEventListener("hashchange", route);
+
+    /* ---------- ক্যাটাগরি ও সার্চ ---------- */
+    function setActiveTab(cat) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+    }
+    document.getElementById("categoryTabs").addEventListener("click", e => {
+      const btn = e.target.closest(".tab-btn");
+      if (!btn) return;
+      currentCategory = btn.dataset.cat;
+      setActiveTab(currentCategory);
+      searchQuery = "";
+      searchInput.value = "";
+      clearBtn.hidden = true;
+      renderHome();
+    });
+
+    let searchTimer = null;
+    const searchInput = document.getElementById("searchInput");
+    const clearBtn = document.getElementById("clearSearch");
+
+    async function findByCode(q) {
+      const m = q.match(/^([a-z0-9]+)\s*-?\s*(\d+)$/i);
+      if (!m) return null;
+      const prefix = m[1].toUpperCase(), n = Number(m[2]);
+      const b = brands.find(x => (x.x || "").toUpperCase() === prefix);
+      if (!b) return null;
+      const wanted = (b.x + "-" + n).toUpperCase();
+      const guess = Math.min(b.parts - 1, Math.floor((n - 1) / PART_SIZE));
+      const order = [];
+      for (let p = 0; p < b.parts; p++) order.push(p);
+      order.sort((a, c) => Math.abs(a - guess) - Math.abs(c - guess));
+      for (const p of order.slice(0, 8)) {
+        const part = await getJSON(`data/b/${b.id}-${p}.json`);
+        const hit = part.find(a => String(a[0]).toUpperCase() === wanted);
+        if (hit) return toItem(hit, b.id);
       }
       return null;
     }
 
-    /* ---------- render ---------- */
-    function displayProducts(items) {
-      const grid = document.getElementById("productGrid");
-      if (!items || items.length === 0) {
-        grid.innerHTML = '<p class="loading">কোনো প্রোডাক্ট পাওয়া যায়নি!</p>';
-        return;
-      }
-
-      grid.innerHTML = items.map(p => {
-        const hasDisc = p.discount_price > 0 && p.discount_price !== p.price;
-        const price = hasDisc ? p.discount_price : p.price;
-        const idx = allProducts.indexOf(p);
-        return `
-          <div class="product-card">
-            <img src="${escapeHTML(p.img)}" class="product-image" alt="${escapeHTML(p.name)}" loading="lazy" referrerpolicy="no-referrer" data-fallback="1">
-            <div class="product-info">
-              <div class="product-title">${escapeHTML(p.name)}</div>
-              <div class="price-box">
-                <span class="product-price">৳ ${price}</span>
-                ${hasDisc ? `<span class="old-price">৳ ${p.price}</span>` : ""}
-              </div>
-              <button class="order-btn" data-index="${idx}">
-                <i class="fa-brands fa-whatsapp"></i> Order Now
-              </button>
-            </div>
-          </div>`;
-      }).join("");
-
-      // ছবি লোড না হলে placeholder
-      grid.querySelectorAll("img[data-fallback]").forEach(img => {
-        img.addEventListener("error", () => { img.src = PLACEHOLDER; }, { once: true });
-      });
+    async function runSearch() {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      clearBtn.hidden = !searchQuery;
+      if (searchQuery) { currentCategory = "all"; setActiveTab("all"); }
+      renderHome();
+      if (!searchQuery) return;
+      const mine = searchQuery;
+      let hit = null;
+      try { hit = await findByCode(mine); } catch (_) {}
+      if (mine !== searchQuery) return;
+      const sec = document.getElementById("codeSection");
+      if (hit) {
+        document.getElementById("codeGrid").innerHTML = cardHTML(hit);
+        sec.hidden = false;
+      } else sec.hidden = true;
     }
-
-    function renderCurrent() {
-      const list = currentCategory === "all" ? allProducts : allProducts.filter(p => p.category === currentCategory);
-      displayProducts(list);
-    }
-
-    /* ---------- init: cache আগে দেখাও, পিছনে fresh ডেটা আনো ---------- */
-    async function init() {
-      let cached = null;
-      try {
-        const raw = localStorage.getItem(CACHE_KEY);
-        if (raw) cached = JSON.parse(raw);
-      } catch (_) {}
-
-      if (cached && cached.products && cached.products.length) {
-        allProducts = cached.products;
-        renderCurrent();
-      }
-
-      const fresh = await loadFresh();
-      if (fresh) {
-        const changed = JSON.stringify(fresh) !== JSON.stringify(allProducts);
-        allProducts = fresh;
-        try { localStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), products: fresh })); } catch (_) {}
-        if (changed) renderCurrent();
-      } else if (!allProducts.length) {
-        document.getElementById("productGrid").innerHTML =
-          '<p class="loading">প্রোডাক্ট লোড করতে সমস্যা হয়েছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।<br><small style="font-size:12px;color:#999">' + escapeHTML(lastError) + '</small></p>';
-      }
-    }
-
-    /* ---------- category ---------- */
-    document.getElementById("categoryTabs").addEventListener("click", e => {
-      const btn = e.target.closest(".tab-btn");
-      if (!btn) return;
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentCategory = btn.dataset.cat;
-      renderCurrent();
+    searchInput.addEventListener("input", () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(runSearch, 250);
     });
+    clearBtn.addEventListener("click", () => { searchInput.value = ""; runSearch(); searchInput.focus(); });
 
-    /* ---------- order modal ---------- */
+    /* ---------- অর্ডার ---------- */
     let selected = null;
 
-    document.getElementById("productGrid").addEventListener("click", e => {
-      const btn = e.target.closest(".order-btn");
+    document.addEventListener("click", e => {
+      const btn = e.target.closest(".order-btn[data-index]");
       if (!btn) return;
-      const p = allProducts[Number(btn.dataset.index)];
-      if (p) openOrderModal(p);
+      const it = store[Number(btn.dataset.index)];
+      if (it) openOrderModal(it);
     });
 
-    function openOrderModal(p) {
-      const hasDisc = p.discount_price > 0 && p.discount_price !== p.price;
-      selected = { name: p.name, price: hasDisc ? p.discount_price : p.price, oldPrice: hasDisc ? p.price : "", img: p.img };
+    function fillAreaOptions() {
+      const sel = document.getElementById("custArea");
+      const keep = sel.value;
+      sel.innerHTML = '<option value="">-- এলাকা বেছে নিন --</option>' +
+        areas.map(a => `<option value="${escapeHTML(a)}">${escapeHTML(a)}</option>`).join("");
+      if (keep && areas.includes(keep)) sel.value = keep;
+    }
+
+    function openOrderModal(it) {
+      const hasDisc = it.disc > 0 && it.disc < it.price;
+      selected = { name: it.name, code: it.code, price: hasDisc ? it.disc : it.price, oldPrice: hasDisc ? it.price : "", img: imgUrl(it.img, 1200) };
 
       const img = document.getElementById("previewImg");
-      img.src = p.img;
+      img.src = imgUrl(it.img, 600);
       img.onerror = () => { img.src = PLACEHOLDER; };
-      document.getElementById("previewName").textContent = p.name;
-      let t = `৳ ${selected.price}`;
+      document.getElementById("previewName").textContent = it.name;
+      document.getElementById("previewCode").textContent = "কোড: " + it.code;
+      let t = selected.price > 0 ? `৳ ${selected.price}` : "দাম জানতে মেসেজ করুন";
       if (selected.oldPrice) t += ` (আগের দাম: ৳ ${selected.oldPrice})`;
       document.getElementById("previewPrice").textContent = t;
 
+      fillAreaOptions();
       document.getElementById("orderModal").style.display = "flex";
     }
 
-    function closeOrderModal() {
-      document.getElementById("orderModal").style.display = "none";
-    }
-
+    function closeOrderModal() { document.getElementById("orderModal").style.display = "none"; }
     document.getElementById("closeModalBtn").addEventListener("click", closeOrderModal);
-    document.getElementById("orderModal").addEventListener("click", e => {
-      if (e.target.id === "orderModal") closeOrderModal();
-    });
+    document.getElementById("orderModal").addEventListener("click", e => { if (e.target.id === "orderModal") closeOrderModal(); });
     document.addEventListener("keydown", e => { if (e.key === "Escape") closeOrderModal(); });
 
     document.getElementById("orderForm").addEventListener("submit", e => {
@@ -394,17 +576,18 @@
 
       const name = document.getElementById("custName").value.trim();
       const phone = document.getElementById("custPhone").value.trim();
+      const area = document.getElementById("custArea").value;
       const address = document.getElementById("custAddress").value.trim();
       const fb = document.getElementById("custFB").value.trim();
 
-      const bn = "০১২৩৪৫৬৭৮৯";
-      const phoneEn = phone.replace(/[০-৯]/g, d => bn.indexOf(d)).replace(/[\s-]/g, "");
-      if (!/^(?:\+?88)?01[3-9]\d{8}$/.test(phoneEn)) {
-        alert("সঠিক মোবাইল নম্বর দিন (যেমন: 01712345678)");
-        return;
-      }
+      if (!area) { alert("অনুগ্রহ করে এলাকা বেছে নিন"); return; }
+      if (!address) { alert("অনুগ্রহ করে বিস্তারিত ঠিকানা লিখুন"); return; }
 
-      let priceDetails = `৳ ${selected.price}`;
+      const digits = "০১২৩৪৫৬৭৮৯";
+      const phoneEn = phone.replace(/[০-৯]/g, d => digits.indexOf(d)).replace(/[\s-]/g, "");
+      if (!/^(?:\+?88)?01[3-9]\d{8}$/.test(phoneEn)) { alert("সঠিক মোবাইল নম্বর দিন (যেমন: 01712345678)"); return; }
+
+      let priceDetails = selected.price > 0 ? `৳ ${selected.price}` : "দাম জানতে চান";
       if (selected.oldPrice) priceDetails += ` (আগের দাম: ৳ ${selected.oldPrice})`;
 
       let msg = `🛍️ *নতুন প্রোডাক্ট অর্ডার*
@@ -412,14 +595,16 @@
 📦 *প্রোডাক্টের তথ্য*
 ━━━━━━━━━━━━━━━━
 *প্রোডাক্ট:* ${selected.name}
+*কোড:* ${selected.code}
 *মূল্য:* ${priceDetails}
-*ছবি লিঙ্ক:* ${selected.img}
+*ছবি:* ${selected.img}
 
 👤 *কাস্টমারের তথ্য*
 ━━━━━━━━━━━━━━━━
 *নাম:* ${name}
 *ফোন নম্বর:* ${phoneEn}
-*ঠিকানা:* ${address}`;
+*এলাকা:* ${area}
+*বিস্তারিত ঠিকানা:* ${address}`;
 
       if (fb) msg += `\n*ফেসবুক:* ${fb}`;
       msg += `\n\n✅ অনুগ্রহ করে অর্ডারটি কনফার্ম করুন।`;
@@ -429,6 +614,30 @@
       e.target.reset();
     });
 
+    /* ---------- শুরু ---------- */
+    async function init() {
+      try {
+        const [b, n, s] = await Promise.all([
+          getJSON("data/brands.json"),
+          getJSON("data/new.json").catch(() => []),
+          getJSON("data/settings.json").catch(() => null)
+        ]);
+        brands = b;
+        brandById = {};
+        brands.forEach(x => { brandById[x.id] = x; });
+        newItems = n || [];
+        if (s) {
+          notices = s.notices || [];
+          if (s.areas && s.areas.length) areas = s.areas;
+          renderNotices();
+        }
+      } catch (e) {
+        loadError = location.protocol === "file:"
+          ? "ফাইলটি কম্পিউটার থেকে সরাসরি খোলা হয়েছে। অনলাইন সাইট (GitHub Pages) থেকে খুলুন"
+          : "ডেটা ফাইল পাওয়া যায়নি (" + e.message + ")। GitHub-এ data ফোল্ডার আছে কিনা দেখুন";
+      }
+      route();
+    }
     init();
   </script>
 </body>
