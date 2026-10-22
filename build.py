@@ -69,16 +69,19 @@ def http_get(url):
 
 
 def read_csv(text):
+    """ফেরত দেয়: (হেডার, সারির তালিকা, মোট সারি)। প্রতিটা সারিতে _row = Sheet-এর আসল সারি নম্বর।"""
     rows = list(csv.reader(io.StringIO(text)))
     if not rows:
-        return [], []
+        return [], [], 0
     headers = [h.strip().lower() for h in rows[0]]
     out = []
-    for r in rows[1:]:
+    for n, r in enumerate(rows[1:], start=2):
         if not any(c.strip() for c in r):
             continue
-        out.append({h: (r[i].strip() if i < len(r) else "") for i, h in enumerate(headers)})
-    return headers, out
+        d = {h: (r[i].strip() if i < len(r) else "") for i, h in enumerate(headers)}
+        d["_row"] = n
+        out.append(d)
+    return headers, out, len(rows)
 
 
 def get_tab(name, first=False):
@@ -133,13 +136,13 @@ def num(x):
 
 def main():
     ptxt = get_tab("products", first=True)
-    ph, prows = read_csv(ptxt or "")
+    ph, prows, total_rows = read_csv(ptxt or "")
     if "category" not in ph and "name" not in ph and "file_id" not in ph:
         print("প্রথম ট্যাব ঠিক নেই (হেডারে category / file_id / name থাকতে হবে)। আগের ডেটা রাখা হলো।")
         sys.exit(1)
 
     btxt = get_tab("brands")
-    bh, brows = read_csv(btxt or "")
+    bh, brows, _ = read_csv(btxt or "")
     if "brand" not in bh:
         brows = []
 
@@ -169,8 +172,9 @@ def main():
         order.append(k)
 
     # ---- পণ্য ----
-    flat = []   # (row_no, code, img, name, price, disc, key)
-    for idx, r in enumerate(prows, start=2):
+    flat = []   # (row_no, item, key)
+    for r in prows:
+        idx = r["_row"]
         ref = img_ref(r)
         if not ref:
             continue
@@ -184,15 +188,17 @@ def main():
         b = brands[k]
         price = to_num(r.get("price"))
         item_disc = to_num(r.get("discount_price"))
+        own = 1 if price > 0 else 0                    # নিজস্ব দাম: ব্র্যান্ডের দাম বদলালে এটা বদলাবে না
         if price <= 0:
             price = b["price"]
         if item_disc > 0 and price > 0 and item_disc < price:
             final_disc = int(round(item_disc))
+            own += 2                                   # নিজস্ব ছাড়ের দাম
         else:
             final_disc = apply_discount(price, b["disc"])
         code = r.get("code", "").strip() or f"R{idx}"
         name = r.get("name", "").strip()
-        item = [code, ref, name, num(price), final_disc]
+        item = [code, ref, name, num(price), final_disc, own]
         b["items"].append(item)
         flat.append((idx, item, k))
 
@@ -226,13 +232,14 @@ def main():
             "cover": items[-1][1],
         })
 
+    # built = এই বিল্ডে Sheet-এর শেষ সারি; এর পরের সারিগুলো সাইট "লাইভ" ব্যবস্থা থেকে নেয়
     with open(os.path.join(TMP, "brands.json"), "w", encoding="utf-8") as f:
-        json.dump(brand_list, f, ensure_ascii=False, separators=(",", ":"))
+        json.dump({"built": total_rows, "brands": brand_list}, f, ensure_ascii=False, separators=(",", ":"))
 
     newest = []
     for _, item, k in reversed(flat[-NEW_COUNT:]):
         b = brands[k]
-        newest.append([item[0], item[1], item[2] or b["title"], item[3], item[4], ids[k]])
+        newest.append([item[0], item[1], item[2] or b["title"], item[3], item[4], item[5], ids[k]])
     with open(os.path.join(TMP, "new.json"), "w", encoding="utf-8") as f:
         json.dump(newest, f, ensure_ascii=False, separators=(",", ":"))
 
@@ -240,7 +247,7 @@ def main():
     settings = None
     stxt = get_tab("settings")
     if stxt:
-        sh, srows = read_csv(stxt)
+        sh, srows, _ = read_csv(stxt)
         if "type" in sh and "value" in sh:
             settings = {"notices": [], "areas": []}
             for r in srows:
