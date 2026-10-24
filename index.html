@@ -109,9 +109,27 @@
     .code-tag { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 12px; z-index: 2; letter-spacing: .3px; }
     .product-title { min-height: 0; margin-bottom: 8px; }
     .price-ask { font-size: 14px; color: #666; font-weight: 600; }
+
+    /* ---------- বন্ধ থাকার পর্দা (settings ট্যাবে "বন্ধ:" দিয়ে শুরু ঘোষণা দিলে সাইট শুধু এটা দেখায়) ---------- */
+    #closedScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; background: var(--bg); text-align: center; }
+    #closedScreen[hidden] { display: none; }
+    .closed-box { max-width: 520px; width: 100%; background: var(--white); border-radius: 16px; padding: 36px 24px; box-shadow: 0 8px 24px var(--shadow); }
+    .closed-logo { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 26px; font-weight: 700; color: var(--secondary-color); margin-bottom: 18px; }
+    .closed-box h1 { font-size: 24px; color: #2c3e50; margin-bottom: 14px; }
+    .closed-box p { font-size: 18px; line-height: 1.7; color: #555; white-space: pre-line; }
+    body.closed { padding-bottom: 0; }
+    body.closed > *:not(#closedScreen) { display: none !important; }
   </style>
 </head>
 <body>
+
+  <div id="closedScreen" hidden>
+    <div class="closed-box">
+      <div class="closed-logo"><i class="fa-solid fa-bag-shopping"></i> আমার বাজার</div>
+      <h1>দুঃখিত, এখন আমরা বন্ধ আছি</h1>
+      <p id="closedMsg"></p>
+    </div>
+  </div>
 
   <header>
     <div class="notice-bar" id="noticeBar" hidden>
@@ -317,9 +335,21 @@
     }
 
     /* ---------- ঘোষণা বার ---------- */
+    const CLOSED_RE = /^\s*(বন্ধ|closed)\s*[:：]\s*/i;
     function renderNotices() {
       const bar = document.getElementById("noticeBar");
       const track = document.getElementById("noticeTrack");
+      // "বন্ধ: ..." দিয়ে শুরু ঘোষণা থাকলে পুরো সাইট বন্ধ দেখাবে
+      const closed = notices.find(n => CLOSED_RE.test(n));
+      const screen = document.getElementById("closedScreen");
+      if (closed) {
+        document.getElementById("closedMsg").textContent = closed.replace(CLOSED_RE, "");
+        document.body.classList.add("closed");
+        screen.hidden = false;
+        return;
+      }
+      document.body.classList.remove("closed");
+      screen.hidden = true;
       if (!notices.length) { bar.hidden = true; return; }
       track.innerHTML = notices.map(n => `<span>${escapeHTML(n)}</span>`).join("");
       bar.hidden = false;
@@ -601,7 +631,7 @@
 
     function openOrderModal(it) {
       const hasDisc = it.disc > 0 && it.disc < it.price;
-      selected = { name: itemName(it), code: it.code, price: hasDisc ? it.disc : it.price, oldPrice: hasDisc ? it.price : "", img: imgUrl(it.img, 1200) };
+      selected = { name: itemName(it), code: it.code, price: hasDisc ? it.disc : it.price, oldPrice: hasDisc ? it.price : "", img: (it.pending || !it.code) ? imgUrl(it.img, 800) : location.origin + location.pathname.replace(/[^\/]*$/, "") + "p/" + String(it.code).replace(/[^A-Za-z0-9_-]/g, "_") + ".html" };
 
       const img = document.getElementById("previewImg");
       img.src = imgUrl(it.img, 600);
@@ -648,7 +678,8 @@
 *প্রোডাক্ট:* ${selected.name}
 *কোড:* ${selected.code}
 *মূল্য:* ${priceDetails}
-*ছবি:* ${selected.img}
+*ছবি দেখতে লিংকে চাপুন:*
+${selected.img}
 
 👤 *কাস্টমারের তথ্য*
 ━━━━━━━━━━━━━━━━
